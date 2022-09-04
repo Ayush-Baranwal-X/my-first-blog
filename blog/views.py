@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from blog.models import Post
 from django.utils import timezone
 import datetime
@@ -12,3 +12,11 @@ def post_list(request):
         "posts" : posts,
     }
     return render(request, "blog/post_list.html", context)
+
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    context = {
+        "post" : post,
+    }
+    return render(request, "blog/post_detail.html",context)
