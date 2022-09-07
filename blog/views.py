@@ -32,9 +32,9 @@ def postNew(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect("postDetail", pk=post.pk)
+            return redirect("post_detail", pk=post.pk)
         else:
-            return redirect("postNew")
+            return redirect("post_new")
     else:
         form = PostForm()
         context = {
@@ -52,9 +52,9 @@ def postEdit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect("postDetail", pk=post.pk)
+            return redirect("post_detail", pk=post.pk)
         else:
-            return redirect("postEdit", pk=post.pk)
+            return redirect("post_edit", pk=post.pk)
     else:
         form = PostForm(instance=post)
         context = {
