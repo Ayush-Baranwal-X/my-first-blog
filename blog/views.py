@@ -7,7 +7,7 @@ import datetime
 # Create your views here.
 
 
-def post_list(request):
+def postList(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by(
         "published_date").reverse()
     context = {
@@ -16,7 +16,7 @@ def post_list(request):
     return render(request, "blog/post_list.html", context)
 
 
-def post_detail(request, pk):
+def postDetail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     context = {
         'post': post
@@ -24,7 +24,7 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', context)
 
 
-def post_new(request):
+def postNew(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -32,9 +32,9 @@ def post_new(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect("post_detail", pk=post.pk)
+            return redirect("postDetail", pk=post.pk)
         else:
-            return redirect("post_new")
+            return redirect("postNew")
     else:
         form = PostForm()
         context = {
@@ -43,7 +43,7 @@ def post_new(request):
         return render(request, 'blog/post_edit.html', context)
 
 
-def post_edit(request, pk):
+def postEdit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
@@ -52,9 +52,9 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect("post_detail", pk=post.pk)
+            return redirect("postDetail", pk=post.pk)
         else:
-            return redirect("post_edit", pk=post.pk)
+            return redirect("postEdit", pk=post.pk)
     else:
         form = PostForm(instance=post)
         context = {
