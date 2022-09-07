@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from blog.models import Post
+from blog.forms import PostForm
 from django.utils import timezone
 import datetime
 
@@ -7,10 +8,56 @@ import datetime
 
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by("published_date")
-    return render(request, "blog/post_list.html", {'posts' : posts})
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by(
+        "published_date").reverse()
+    context = {
+        'posts': posts
+    }
+    return render(request, "blog/post_list.html", context)
 
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    context = {
+        'post': post
+    }
+    return render(request, 'blog/post_detail.html', context)
+
+
+def post_new(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect("post_detail", pk=post.pk)
+        else:
+            return redirect("post_new")
+    else:
+        form = PostForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/post_edit.html', context)
+
+
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect("post_detail", pk=post.pk)
+        else:
+            return redirect("post_edit", pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+        context = {
+            'form': form
+        }
+        return render(request, 'blog/post_edit.html', context)
