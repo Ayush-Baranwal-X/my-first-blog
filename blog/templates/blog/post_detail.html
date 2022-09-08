@@ -8,12 +8,12 @@
     
     {% if user.is_authenticated %}
     <aside style="float: left;">
-        <a class="btn btn secondary" href="{% url 'post_edit' pk=post.pk%}">
+        <a class="btn btn secondary" href="{% url 'post_edit' pk=post.pk %}">
             {% include './icons/pencil-fill.svg' %}
         </a>
     </aside>
     <aside style="float: left;">
-        <a class="btn btn secondary" href="{% url 'post_delete' pk=post.pk%}">
+        <a class="btn btn secondary" href="{% url 'post_delete' pk=post.pk %}">
             {% include './icons/lock-fill.svg' %}
         </a>
     </aside>
