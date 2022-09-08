@@ -63,6 +63,7 @@ def postEdit(request, pk):
         return render(request, 'blog/post_edit.html', context)
 
 def postDelete(request, pk):
-    post = get_object_or_404(Post, pk = pk)
+    # post = get_object_or_404(Post, pk = pk)
+    post = Post.objects.get(pk=pk)
     post.delete()
     return redirect("post_list")
