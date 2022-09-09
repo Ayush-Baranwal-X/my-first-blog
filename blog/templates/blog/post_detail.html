@@ -27,7 +27,7 @@
         {% if post.published_date == null %}
         <aside style="float: left;">
             <a class="btn btn secondary" href="{% url 'post_publish' pk=post.pk %}">
-                {% include './icons/file-earmark-check-fill.svg' %}
+                {% include './icons/file-check-fill.svg' %}
             </a>
         </aside>
         {% endif %}

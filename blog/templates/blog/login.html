@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<center>
+    <h2 style="margin-left: 50px;">Only for Authorized Users<h2>
+</center>
+<br>
+<form method="POST" action="" class="post_form" style="margin-left: 50px;">
+    <center>
+        {% csrf_token %}
+        <p>Username</p>
+        {{ form.username }}
+        <br>
+        <br>
+        <p>Password</p>
+        {{ form.password }}
+        <br>
+        <br>
+    </center>
+    <center>
+        <button name="login" type="submit" class="save btn btn-secondary" style="float: none;">Login</button>
+        <button name="reset" type="reset" class="save btn btn-secondary" style="float: none;">Reset</button>
+    </center>
+</form>
+{% endblock content %}
