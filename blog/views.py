@@ -29,8 +29,11 @@ def postNew(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            # post.published_date = timezone.now()
-            post.save()
+            if 'draft' in request.POST:
+                post.save()
+            elif 'publish' in request.POST:
+                post.published_date = timezone.now()
+                post.save()
             return redirect("post_detail", pk=post.pk)
         else:
             return redirect("post_new")
@@ -49,8 +52,11 @@ def postEdit(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            # post.published_date = timezone.now()
-            post.save()
+            if 'draft' in request.POST:
+                post.save()
+            elif 'publish' in request.POST:
+                post.published_date = timezone.now()
+                post.save()
             return redirect("post_detail", pk=post.pk)
         else:
             return redirect("post_edit", pk=post.pk)
