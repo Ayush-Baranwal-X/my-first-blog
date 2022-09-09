@@ -20,6 +20,9 @@
                 <a href="{% url 'post_new' %}" class="top-menu">
                     {% include './icons/file-earmark-plus.svg' %}
                 </a>
+                <a href="{% url 'post_drafts' %}" class="top-menu" style="margin-right: -120px;">
+                    {% include './icons/file-earmark-post.svg' %}
+                </a>
             {% endif %}
             <h1><a href="/" style="text-decoration: none;">Ayush's Blog</a></h1>
         </div>

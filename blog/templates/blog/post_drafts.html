@@ -2,10 +2,11 @@
 
 {% block content %}
 
+{% for post in posts %}
 <article class="post">
-    <time style="float: right; margin-right: 20px; opacity: 0.7;">Published : {{post.published_date}}</time>
+    <time style="float: right; margin-right: 20px; opacity: 0.7;">Created : {{post.created_date}}</time>
     <h2><a href="{% url 'post_detail' pk=post.pk %}" style="text-decoration: none; float: left;">{{post.title}}</a></h2>
-    
+
     {% if user.is_authenticated %}
     <aside style="float: left;">
         <a class="btn btn secondary" href="{% url 'post_edit' pk=post.pk %}">
@@ -17,9 +18,15 @@
             {% include './icons/lock-fill.svg' %}
         </a>
     </aside>
+    <aside style="float: left;">
+        <a class="btn btn secondary" href="{% url 'post_publish' pk=post.pk %}">
+            {% include './icons/file-earmark-check-fill.svg' %}
+        </a>
+    </aside>
     {% endif %}
-    
-    <p style="clear: both; word-wrap: break-word;" >{{post.text}}</p>
+
+    <p style="clear: both; word-wrap: break-word;">{{post.text}}</p>
 </article>
+{% endfor %}
 
 {% endblock content %}
